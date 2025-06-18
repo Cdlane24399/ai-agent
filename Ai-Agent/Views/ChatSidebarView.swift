@@ -56,7 +56,7 @@ struct ChatSidebarView: View {
                     .help("New Conversation")
                 }
                 
-                // Modern Search Bar
+                // Modern Search Bar with subtle border
                 HStack(spacing: 12) {
                     Image(systemName: "magnifyingglass")
                         .font(.system(size: 16, weight: .medium))
@@ -82,7 +82,7 @@ struct ChatSidebarView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
-                .themedBackground(.surface)
+                .background(themeManager.currentTheme.colors.surfaceBackground)
                 .cornerRadius(themeManager.currentTheme.cornerRadius.lg)
                 .overlay(
                     RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.lg)
@@ -96,21 +96,11 @@ struct ChatSidebarView: View {
             .padding(.horizontal, 20)
             .padding(.top, 20)
             .padding(.bottom, 16)
-            .themedBackground(.secondary)
+            .themedBackground(.primary)
             
-            // Divider with gradient
+            // Divider with subtle styling
             Rectangle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            themeManager.currentTheme.colors.primaryBorder,
-                            themeManager.currentTheme.colors.primaryBorder.opacity(0.3),
-                            themeManager.currentTheme.colors.primaryBorder
-                        ],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
+                .fill(themeManager.currentTheme.colors.primaryBorder.opacity(0.3))
                 .frame(height: 1)
             
             // Chat list
@@ -148,12 +138,12 @@ struct ChatSidebarView: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 16)
             }
-            .themedBackground(.tertiary)
+            .themedBackground(.primary)
             
-            // Footer
+            // Footer with subtle top border
             VStack(spacing: 16) {
                 Rectangle()
-                    .fill(themeManager.currentTheme.colors.primaryBorder.opacity(0.5))
+                    .fill(themeManager.currentTheme.colors.primaryBorder.opacity(0.3))
                     .frame(height: 1)
                 
                 HStack(spacing: 16) {
@@ -193,9 +183,9 @@ struct ChatSidebarView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             }
-            .themedBackground(.secondary)
+            .themedBackground(.primary)
         }
-        .themedBackground(.secondary)
+        .themedBackground(.primary)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

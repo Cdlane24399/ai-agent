@@ -39,7 +39,7 @@ struct ContentView: View {
             .themedBackground(BackgroundLevel.primary)
         }
         .navigationSplitViewStyle(.balanced)
-        .themedBackground(BackgroundLevel.secondary)
+        .themedBackground(BackgroundLevel.primary)
         .sheet(isPresented: $appState.showSettings) {
             SettingsView()
                 .environmentObject(settingsManager)

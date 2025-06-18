@@ -71,7 +71,7 @@ struct ChatHeaderView: View {
         }
         .padding(.horizontal, 32)
         .padding(.vertical, 16)
-        .background(.regularMaterial, in: Rectangle())
+        .themedBackground(.primary)
         .overlay(
             Rectangle()
                 .fill(themeManager.currentTheme.colors.primaryBorder.opacity(0.3))

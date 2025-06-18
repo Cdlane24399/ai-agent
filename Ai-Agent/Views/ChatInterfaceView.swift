@@ -35,7 +35,7 @@ struct ChatInterfaceView: View {
                     .padding(.horizontal, 32)
                     .padding(.vertical, 24)
                 }
-                .themedBackground(.surface)
+                .themedBackground(.primary)
                 .onChange(of: chatManager.currentSession.messages.count) {
                     withAnimation(.easeOut(duration: 0.4)) {
                         if let lastMessage = chatManager.currentSession.messages.last {
@@ -45,9 +45,8 @@ struct ChatInterfaceView: View {
                 }
             }
             
-            // Modern input area with glass morphism
+            // Input area with subtle border separation
             ChatInputView()
-                .background(.regularMaterial, in: Rectangle())
         }
         .themedBackground(.primary)
     }

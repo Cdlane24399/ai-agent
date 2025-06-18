@@ -21,32 +21,37 @@ struct ChatInputView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            // Subtle top border for visual separation
+            Rectangle()
+                .fill(themeManager.currentTheme.colors.primaryBorder.opacity(0.3))
+                .frame(height: 1)
+            
             // File attachments preview
             if !selectedFiles.isEmpty {
                 FileAttachmentsView(files: $selectedFiles)
-                    .padding(.horizontal, 24)
-                    .padding(.top, 16)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
             }
             
-            // Input area with modern glass morphism
-            HStack(alignment: .bottom, spacing: 16) {
+            // Input area with more compact sizing
+            HStack(alignment: .bottom, spacing: 10) {
                 // File picker button
                 Button(action: { isFilePickerPresented = true }) {
                     Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 24, weight: .medium))
+                        .font(.system(size: 18, weight: .medium))
                         .foregroundColor(themeManager.currentTheme.colors.accent)
                 }
                 .buttonStyle(.plain)
                 .help("Attach files")
                 
-                // Text input with modern styling
-                VStack(spacing: 8) {
+                // Text input with more compact styling
+                VStack(spacing: 4) {
                     ZStack(alignment: .topLeading) {
-                        // Modern input background with glass effect
-                        RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.xl)
+                        // Modern input background with subtle styling
+                        RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.lg)
                             .fill(themeManager.currentTheme.colors.surfaceBackground)
                             .overlay(
-                                RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.xl)
+                                RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.lg)
                                     .stroke(
                                         isDragOver ? themeManager.currentTheme.colors.accent :
                                         isInputFocused ? themeManager.currentTheme.colors.focusBorder :
@@ -56,14 +61,14 @@ struct ChatInputView: View {
                             )
                             .themedShadow(.small)
                         
-                        // Text editor
+                        // Text editor with more compact sizing
                         TextEditor(text: $inputText)
                             .focused($isInputFocused)
-                            .font(.system(size: 16))
+                            .font(.system(size: 14))
                             .scrollContentBackground(.hidden)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 16)
-                            .frame(minHeight: 52, maxHeight: 120)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .frame(minHeight: 32, maxHeight: 60)
                             .overlay(
                                 // Placeholder with better styling
                                 Group {
@@ -71,9 +76,9 @@ struct ChatInputView: View {
                                         HStack {
                                             Text("Ask me anything...")
                                                 .foregroundColor(themeManager.currentTheme.colors.placeholderText)
-                                                .font(.system(size: 16))
-                                                .padding(.horizontal, 24)
-                                                .padding(.vertical, 20)
+                                                .font(.system(size: 14))
+                                                .padding(.horizontal, 14)
+                                                .padding(.vertical, 8)
                                             Spacer()
                                         }
                                     }
@@ -84,46 +89,46 @@ struct ChatInputView: View {
                     
                     // Input status and actions
                     HStack {
-                        // API key warning with better styling
+                        // API key warning with more compact styling
                         if !settingsManager.isConfigured {
-                            HStack(spacing: 8) {
+                            HStack(spacing: 6) {
                                 Image(systemName: "exclamationmark.triangle.fill")
-                                    .font(.system(size: 14))
+                                    .font(.system(size: 12))
                                     .foregroundColor(themeManager.currentTheme.colors.warning)
                                 
                                 Text("API key required")
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(.system(size: 12, weight: .medium))
                                     .foregroundColor(themeManager.currentTheme.colors.warning)
                                 
                                 Button("Configure") {
                                     // Will open settings via app state
                                 }
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: 12, weight: .semibold))
                                 .foregroundColor(themeManager.currentTheme.colors.accent)
                             }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
                             .background(themeManager.currentTheme.colors.warning.opacity(0.1))
                             .cornerRadius(themeManager.currentTheme.cornerRadius.sm)
                         }
                         
                         Spacer()
                         
-                        // Character count with better styling
+                        // Character count with more compact styling
                         if !inputText.isEmpty {
                             Text("\(inputText.count)")
-                                .font(.system(size: 13, weight: .medium))
+                                .font(.system(size: 11, weight: .medium))
                                 .foregroundColor(themeManager.currentTheme.colors.tertiaryText)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
                                 .background(themeManager.currentTheme.colors.tertiaryBackground.opacity(0.5))
                                 .cornerRadius(themeManager.currentTheme.cornerRadius.sm)
                         }
                     }
-                    .padding(.horizontal, 4)
+                    .padding(.horizontal, 2)
                 }
                 
-                // Send button with modern styling
+                // Send button with more compact styling
                 Button(action: sendMessage) {
                     ZStack {
                         Circle()
@@ -132,10 +137,10 @@ struct ChatInputView: View {
                                 themeManager.currentTheme.colors.accent : 
                                 themeManager.currentTheme.colors.tertiaryBackground
                             )
-                            .frame(width: 44, height: 44)
+                            .frame(width: 30, height: 30)
                         
                         Image(systemName: chatManager.isLoading ? "stop.fill" : "arrow.up")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.system(size: 12, weight: .bold))
                             .foregroundColor(canSend ? .white : themeManager.currentTheme.colors.tertiaryText)
                     }
                 }
@@ -145,10 +150,10 @@ struct ChatInputView: View {
                 .scaleEffect(canSend ? 1.0 : 0.9)
                 .animation(.easeInOut(duration: 0.2), value: canSend)
             }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 20)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
         }
-        .themedBackground(.secondary)
+        .themedBackground(.primary)
         .onDrop(of: [.fileURL, .image], isTargeted: $isDragOver) { providers in
             handleDroppedFiles(providers)
             return true
@@ -266,15 +271,15 @@ struct FileAttachmentsView: View {
     @EnvironmentObject var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
-                HStack(spacing: 8) {
+                HStack(spacing: 6) {
                     Image(systemName: "paperclip")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: 12, weight: .medium))
                         .foregroundColor(themeManager.currentTheme.colors.accent)
                     
                     Text("Attached files (\(files.count))")
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(themeManager.currentTheme.colors.primaryText)
                 }
                 
@@ -285,13 +290,13 @@ struct FileAttachmentsView: View {
                         files.removeAll()
                     }
                 }
-                .font(.system(size: 13, weight: .medium))
+                .font(.system(size: 11, weight: .medium))
                 .foregroundColor(themeManager.currentTheme.colors.error)
                 .modernButton(style: .ghost, size: .small)
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
+                HStack(spacing: 10) {
                     ForEach(files) { file in
                         FileAttachmentCard(file: file) {
                             withAnimation(.easeInOut(duration: 0.2)) {
@@ -300,18 +305,17 @@ struct FileAttachmentsView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 4)
-                .padding(.vertical, 4)
+                .padding(.horizontal, 2)
+                .padding(.vertical, 2)
             }
         }
-        .padding(16)
-        .background(themeManager.currentTheme.colors.tertiaryBackground)
-        .cornerRadius(themeManager.currentTheme.cornerRadius.lg)
+        .padding(12)
+        .background(themeManager.currentTheme.colors.surfaceBackground)
+        .cornerRadius(themeManager.currentTheme.cornerRadius.md)
         .overlay(
-            RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.lg)
+            RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.md)
                 .stroke(themeManager.currentTheme.colors.primaryBorder.opacity(0.5), lineWidth: 1)
         )
-        .themedShadow(.small)
     }
 }
 
@@ -323,53 +327,52 @@ struct FileAttachmentCard: View {
     @State private var isHovering = false
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             ZStack(alignment: .topTrailing) {
-                // File preview with modern styling
-                RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.md)
-                    .fill(themeManager.currentTheme.colors.surfaceBackground)
-                    .frame(width: 64, height: 64)
+                // File preview with more compact styling
+                RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.sm)
+                    .fill(themeManager.currentTheme.colors.tertiaryBackground)
+                    .frame(width: 52, height: 52)
                     .overlay(
                         Image(systemName: file.type.icon)
-                            .font(.system(size: 24, weight: .medium))
+                            .font(.system(size: 20, weight: .medium))
                             .foregroundColor(colorForFileType(file.type))
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.md)
+                        RoundedRectangle(cornerRadius: themeManager.currentTheme.cornerRadius.sm)
                             .stroke(themeManager.currentTheme.colors.primaryBorder.opacity(0.3), lineWidth: 1)
                     )
-                    .themedShadow(.small)
                 
-                // Remove button with better styling
+                // Remove button with more compact styling
                 Button(action: onRemove) {
                     ZStack {
                         Circle()
                             .fill(themeManager.currentTheme.colors.error)
-                            .frame(width: 20, height: 20)
+                            .frame(width: 16, height: 16)
                         
                         Image(systemName: "xmark")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(.system(size: 8, weight: .bold))
                             .foregroundColor(.white)
                     }
                 }
                 .buttonStyle(.plain)
-                .offset(x: 8, y: -8)
+                .offset(x: 6, y: -6)
                 .opacity(isHovering ? 1.0 : 0.7)
                 .scaleEffect(isHovering ? 1.1 : 1.0)
                 .animation(.easeInOut(duration: 0.2), value: isHovering)
             }
             
-            // File name with better typography
-            VStack(spacing: 4) {
+            // File name with more compact typography
+            VStack(spacing: 2) {
                 Text(file.name)
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.system(size: 10, weight: .medium))
                     .foregroundColor(themeManager.currentTheme.colors.primaryText)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
-                    .frame(width: 80)
+                    .frame(width: 64)
                 
                 Text(formatFileSize(file.size))
-                    .font(.system(size: 10, weight: .medium))
+                    .font(.system(size: 9, weight: .medium))
                     .foregroundColor(themeManager.currentTheme.colors.tertiaryText)
             }
         }
